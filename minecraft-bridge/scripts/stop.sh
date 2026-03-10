@@ -1,5 +1,5 @@
 #!/bin/bash
-PID_FILE="/tmp/minecraft-bridge.pid"
+PID_FILE="${XDG_RUNTIME_DIR:-/tmp}/minecraft-bridge-$(id -u).pid"
 
 if [ ! -f "$PID_FILE" ]; then
   echo "Bridge was not started via start.sh (PID file missing)."

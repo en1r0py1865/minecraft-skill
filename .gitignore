@@ -3,3 +3,8 @@ node_modules/
 .DS_Store
 config.json
 *.skill
+.env
+.env.*
+*.pem
+*.key
+*.p12

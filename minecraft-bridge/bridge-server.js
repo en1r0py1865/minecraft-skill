@@ -117,7 +117,7 @@ function requireConnected(res) {
 }
 
 function json(res, code, body) {
-  res.writeHead(code, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+  res.writeHead(code, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(body));
 }
 
@@ -190,8 +190,10 @@ const handlers = {
 
   'POST /command': async ({ command }) => {
     if (!command) throw new Error('command field required');
-    // WARNING: arbitrary slash-command proxy. Prefer minecraft-server-admin / RCON
-    // for server administration tasks instead of treating this as a general admin API.
+    const BLOCKED_COMMANDS = /^\/?(?:op|deop|stop|ban|ban-ip|pardon|kick|whitelist|save-off|save-all|save-on|reload|restart)\b/i;
+    if (BLOCKED_COMMANDS.test(command.trim())) {
+      throw new Error(`Command blocked for safety: "${command}". Use minecraft-server-admin / RCON for server administration.`);
+    }
     const cmd = command.startsWith('/') ? command : `/${command}`;
     state.bot.chat(cmd);
     return { executed: cmd };
@@ -199,6 +201,10 @@ const handlers = {
 
   'POST /move': async ({ x, y, z }) => {
     if (x === undefined || z === undefined) throw new Error('x and z required');
+    const COORD_LIMIT = 30_000_000;
+    if (Math.abs(+x) > COORD_LIMIT || Math.abs(+z) > COORD_LIMIT || (y !== undefined && Math.abs(+y) > 320)) {
+      throw new Error(`Coordinates out of range (max ±${COORD_LIMIT} XZ, ±320 Y)`);
+    }
     state.currentAction = `moving to ${x},${y ?? '?'},${z}`;
     const goal = y !== undefined ? new goals.GoalBlock(+x, +y, +z) : new goals.GoalXZ(+x, +z);
     await withTimeout(new Promise((res, rej) => {
@@ -214,6 +220,7 @@ const handlers = {
 
   'POST /mine': async ({ blockName, count = 1 }) => {
     if (!blockName) throw new Error('blockName required');
+    count = Math.min(Math.max(1, +count), 64);
     const blockId = state.bot.registry.blocksByName[blockName]?.id;
     if (!blockId) throw new Error(`Unknown block: ${blockName}`);
 
@@ -232,6 +239,7 @@ const handlers = {
 
   'POST /collect': async ({ itemName, count = 1 }) => {
     if (!itemName) throw new Error('itemName field required');
+    count = Math.min(Math.max(1, +count), 64);
     const targets = Object.values(state.bot.entities)
       .filter(e => e.objectType === 'Item' && e.metadata?.[8]?.itemId)
       .filter(e => {
@@ -292,11 +300,7 @@ const handlers = {
 
 const server = http.createServer((req, res) => {
   if (req.method === 'OPTIONS') {
-    res.writeHead(204, {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET,POST',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    });
+    res.writeHead(204);
     res.end();
     return;
   }
@@ -341,7 +345,7 @@ server.listen(CFG.bridge.port, '127.0.0.1', () => {
   console.log('Minecraft Bridge v1.0.0');
   console.log(`HTTP API -> http://localhost:${CFG.bridge.port}`);
   console.log('Bound to 127.0.0.1 only — do not expose this service publicly.');
-  console.log('Security note: because CORS is permissive, a malicious local browser page could still send requests while the bridge is running. Use only on trusted machines.');
+  console.log('Note: CORS headers are not sent — only same-origin or non-browser clients can access this API.');
   console.log(`Connecting to Minecraft ${CFG.mc.host}:${CFG.mc.port}...`);
   console.log(`  version=${CFG.mc.version}, auth=${CFG.mc.auth}`);
   createBot();

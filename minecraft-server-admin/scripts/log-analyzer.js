@@ -11,6 +11,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 
 const LOG_FILE = process.env.MC_SERVER_LOG || '';
 const args = process.argv.slice(2);
@@ -161,13 +162,19 @@ if (require.main === module) {
     process.exit(1);
   }
 
-  if (!fs.existsSync(filePath)) {
-    console.error(`Log file not found: ${filePath}`);
+  const resolvedPath = path.resolve(filePath);
+  if (!resolvedPath.endsWith('.log') && !resolvedPath.endsWith('.txt')) {
+    console.error('Only .log and .txt files are supported');
+    process.exit(1);
+  }
+
+  if (!fs.existsSync(resolvedPath)) {
+    console.error(`Log file not found: ${resolvedPath}`);
     process.exit(1);
   }
 
   try {
-    const content = fs.readFileSync(filePath, 'utf8');
+    const content = fs.readFileSync(resolvedPath, 'utf8');
     const allLines = content.split('\n');
     const chunk = allLines.slice(-maxLines).join('\n');
     const report = analyzeLog(chunk);

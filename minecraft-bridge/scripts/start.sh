@@ -3,7 +3,7 @@
 
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 BRIDGE_PORT="${MC_BRIDGE_PORT:-3001}"
-PID_FILE="/tmp/minecraft-bridge.pid"
+PID_FILE="${XDG_RUNTIME_DIR:-/tmp}/minecraft-bridge-$(id -u).pid"
 
 if [ -f "$PID_FILE" ]; then
   PID=$(cat "$PID_FILE")
