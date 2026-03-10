@@ -59,7 +59,7 @@
 
 ### Wither Skeleton
 - Spawns only in Nether fortress corridors
-- Health: 35, 2.4 blocks tall (can walk through 1-block-high passages)
+- Health: 35, 2.4 blocks tall (requires 3-block clearance)
 - Attack: stone sword + **Wither effect** (black health bar, 10s duration)
 - **Drops**: bones, stone sword (rare), **wither skeleton skull (2.5%)** — required to summon the Wither
 
@@ -92,7 +92,7 @@
 - Health: 200
 - **Defeat rewards**: 12,000 XP + dragon egg + End gateway portal activated (access to End cities)
 - **Strategy**:
-  1. Destroy all end crystals (8 total, on tower tops + iron cages)
+  1. Destroy all end crystals (10 total on obsidian pillars, 2 protected by iron bar cages)
   2. Use bed explosions or bow to attack the dragon
   3. Melee the dragon when it perches on the fountain
 

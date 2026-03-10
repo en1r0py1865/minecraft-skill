@@ -15,7 +15,7 @@
 | Lapis Lazuli | Y=0 | Triangular −64→64 | Stone Pickaxe | Highest concentration at Y=0 |
 | Redstone | Y=−58 | Triangular −64→16 | Iron Pickaxe | Most abundant at deepest layers |
 | Diamond | Y=−58 | Triangular −64→16 | Iron Pickaxe | **Completely redistributed** |
-| Emerald | Y=236 | Mountain-only | Iron Pickaxe | Only in mountain biomes |
+| Emerald | Y=256+ (higher is better) | Mountain-only | Iron Pickaxe | Only in mountain biomes |
 
 ---
 
@@ -103,7 +103,7 @@
 
 | Biome | Special Resource | Notes |
 |-------|-----------------|-------|
-| Mountains / Peaks | Emerald (peak at Y=236) | Only generates in mountain biomes |
+| Mountains / Peaks | Emerald (higher Y = more dense, up to Y=320) | Only generates in mountain biomes |
 | Swamp | Slightly more lapis lazuli | Probability slightly above average |
 | Mineshaft / Ruins | All ores + gold blocks | Structures contain gold blocks and ores |
 | Cliffs | Exposed iron ore | Iron ore visible on mountain surfaces |

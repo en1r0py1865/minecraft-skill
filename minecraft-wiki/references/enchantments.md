@@ -19,12 +19,12 @@ The following enchantments within the same group are mutually exclusive (only on
 
 | Enchantment | Max Level | Effect | Notes |
 |-------------|----------|--------|-------|
-| Sharpness | V | +1.25 damage/level | Best general-purpose choice |
+| Sharpness | V | +0.5 × level + 0.5 damage (V = +3.0) | Best general-purpose choice |
 | Smite | V | +2.5 damage/level vs undead | Dedicated for zombie farms |
 | Bane of Arthropods | V | +2.5 damage/level vs arthropods | Spiders/bees/silverfish |
 | Knockback | II | +3 blocks knockback/level | Useful in PvP |
 | Fire Aspect | II | Ignites target for 3/8 seconds | Cooks dropped meat |
-| Looting | III | Increases rare drop chance | ~+1% chance per level |
+| Looting | III | Increases max drop count by 1/level and boosts rare drop rates | Essential for mob farms |
 | Sweeping Edge | III | Increases sweep attack damage | Sword only |
 | Mending | I | Repairs durability with XP | Treasure enchantment |
 | Unbreaking | III | Reduces durability loss chance | 1/(level+1) |
@@ -54,7 +54,7 @@ The following enchantments within the same group are mutually exclusive (only on
 
 | Enchantment | Max Level | Effect | Applies To |
 |-------------|----------|--------|-----------|
-| Efficiency | V | Mining speed +30%^level | All tools |
+| Efficiency | V | +level² + 1 mining speed bonus (Eff V = +26) | All tools |
 | Fortune | III | Multiplies block drops | Mining/farming |
 | Silk Touch | I | Drops the block itself | Incompatible with Fortune |
 | Unbreaking | III | Same as above | All tools |
@@ -126,4 +126,4 @@ Treasure enchantments (✨) cannot be obtained from the enchanting table (unless
 1. Place the enchanting table surrounded by **15 bookshelves** (1 block of air between table and shelves, shelves at 2 blocks distance)
 2. Bookshelf count vs max enchantment level: 0 = level 1, 15 = level 30
 3. Max-level enchantment requires **3 lapis lazuli + 30 experience levels**
-4. Unsatisfied with options? Spend 1 lapis lazuli to re-roll (only refreshes the bottom two options)
+4. Unsatisfied with options? Enchant a cheap item (e.g. wooden shovel) at level 1 to re-roll all three options
